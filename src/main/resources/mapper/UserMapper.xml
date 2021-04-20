@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjnu.intelligentwardrobe.Mapper.UserMapper">
+    <insert id="saveUser">
+        insert into user(phone,password) value(#{phone},#{password})
+    </insert>
+    <update id="updateUser">
+        update user set ${column}=#{value} where uid=#{uid}
+    </update>
+    <select id="findUser" resultType="com.fjnu.intelligentwardrobe.Bean.User">
+        select * from user where phone=#{phone} and password=#{password}
+    </select>
+    <select id="findUserByPhone" resultType="com.fjnu.intelligentwardrobe.Bean.User">
+        select * from user where phone=#{phone}
+    </select>
+</mapper>

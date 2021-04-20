@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjnu.intelligentwardrobe.Mapper.ClothesMapper">
+    <insert id="addClothes">
+        insert into clothes(uid,c_desc,typeid,imgsrc,season,occasion) value(#{uid},#{desc},#{typeid},#{imgsrc},#{season},#{occasion})
+    </insert>
+    <update id="updateClothes">
+        update clothes
+         set uid=#{uid},c_desc=#{c_desc},typeid=#{typeid},imgsrc=#{imgsrc},season=#{season},occasion=#{occasion}
+         where clothesid=#{clothesid}
+    </update>
+    <update id="updateClothesStatus">
+        update clothes set iscleaned=#{status} where clothesid=#{clothesid}
+    </update>
+    <delete id="deleteClothes">
+        delete from clothes where clothesid=#{clothesid}
+    </delete>
+    <delete id="deleteClothesByTypeid">
+        delete from clothes where typeid=#{typeid}
+    </delete>
+    <select id="findClothesByTypeId" resultType="com.fjnu.intelligentwardrobe.Bean.clothes">
+        select * from clothes where typeid=#{typeid} and uid=#{uid} and iscleaned='true'
+    </select>
+    <select id="findClothesByClothesId" resultType="com.fjnu.intelligentwardrobe.Bean.clothes">
+        select * from clothes where clothesid=#{clothesid}
+    </select>
+    <select id="findDirtyClothers" resultType="com.fjnu.intelligentwardrobe.Bean.clothes">
+        select * from clothes where iscleaned='false' and uid=#{uid}
+    </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjnu.intelligentwardrobe.Mapper.combinationMapper">
+    <resultMap type="com.fjnu.intelligentwardrobe.Bean.dto.combinationClothes" id="combinationClothesMap">
+        <result column="combinationid" property="combinationid"/>
+        <result column="c_desc" property="c_desc"/>
+        <collection property="clothesList" ofType="com.fjnu.intelligentwardrobe.Bean.clothes" column="clothesid">
+            <result property="clothesid" column="clothesid"/>
+            <result property="imgsrc" column="imgsrc"/>
+        </collection>
+
+
+    </resultMap>
+    <insert id="addCombination">
+        insert into combination(uid,c_desc) value(#{uid},#{c_desc})
+    </insert>
+    <insert id="addClothesToCombination">
+        insert into combinationdetailed(combinationid,clothesid,uid) value(#{combinationId},#{clothesId},#{uid})
+    </insert>
+    <update id="updateCombination">
+        update combination set c_desc=#{c_desc} where combinationid=#{combinationid}
+    </update>
+    <delete id="deleteCombination">
+        delete from combination where combinationid=#{combinationid}
+
+    </delete>
+    <delete id="deleteCombinationDetailed">
+        delete from combinationdetailed where combinationid=#{combinationid}
+    </delete>
+    <select id="getLastInsertId" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID()
+    </select>
+    <select id="findCombinationByUid" resultMap="combinationClothesMap">
+        select c.c_desc,cd.combinationid,cd.clothesid,cs.imgsrc
+        from combination c,combinationdetailed cd,clothes cs
+        where cd.clothesid=cs.clothesid
+        and c.combinationid=cd.combinationid
+    </select>
+    <select id="findCombinationBycombinationid"
+            resultMap="combinationClothesMap">
+        select c.c_desc,cd.combinationid,cd.clothesid,cs.imgsrc
+        from combination c,combinationdetailed cd,clothes cs
+        where cd.clothesid=cs.clothesid
+        and c.combinationid=cd.combinationid
+        and c.combinationid=#{combinationid}
+    </select>
+</mapper>
