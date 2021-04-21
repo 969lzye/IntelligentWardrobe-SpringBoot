@@ -21,13 +21,13 @@ public class UserController {
     @RequestMapping("/login")
     public List<User> findUser(String phone,String password){
         System.out.println("小程序前端调用登录，参数："+phone+","+password);
-        return userService.findUser(Integer.parseInt(phone),password);
+        return userService.findUser(Long.parseLong(phone),password);
     }
 
     @RequestMapping("/register")
     public boolean register(String phone,String password){
         System.out.println("小程序进行注册，参数："+phone+","+password);
-        return userService.saveUser(Integer.parseInt(phone),password);
+        return userService.saveUser(Long.parseLong(phone),password);
     }
 
     @RequestMapping("/updateUser")
@@ -39,6 +39,6 @@ public class UserController {
     @RequestMapping("/findUserByPhone")
     public List<User> findUser(String phone){
         System.out.println("小程序前端根据phone返回用户信息，参数："+phone);
-        return userService.findUserByPhone(Integer.parseInt(phone));
+        return userService.findUserByPhone(Long.parseLong(phone));
     }
 }

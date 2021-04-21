@@ -15,17 +15,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findUser(Integer phone, String password) {
+    public List<User> findUser(Long phone, String password) {
         return userMapper.findUser(phone,password);
     }
 
     @Override
-    public List<User> findUserByPhone(Integer phone) {
+    public List<User> findUserByPhone(Long phone) {
         return userMapper.findUserByPhone(phone);
     }
 
     @Override
-    public boolean saveUser(Integer phone, String password) {
+    public boolean saveUser(Long phone, String password) {
         if (userMapper.saveUser(phone,password)>0)
             return true;
         else

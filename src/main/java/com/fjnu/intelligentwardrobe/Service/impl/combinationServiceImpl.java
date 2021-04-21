@@ -14,14 +14,14 @@ public class combinationServiceImpl implements combinationService {
     @Autowired
     private combinationMapper combinationMapper;
     @Override
-    public Integer addCombination( Integer uid, String c_desc) {
-        combinationMapper.addCombination(uid,c_desc);
+    public Integer addCombination( Integer uid, String c_desc,String occasion) {
+        combinationMapper.addCombination(uid,c_desc,occasion);
         return combinationMapper.getLastInsertId();
     }
 
     @Override
-    public Integer addClothesToCombination(Integer uid,Integer combinationId, Integer clothesId) {
-        return combinationMapper.addClothesToCombination(uid,combinationId,clothesId);
+    public Integer addClothesToCombination(Integer uid,Integer combinationId, Integer clothesId,Integer value) {
+        return combinationMapper.addClothesToCombination(uid,combinationId,clothesId,value);
     }
 
     @Override
@@ -45,7 +45,38 @@ public class combinationServiceImpl implements combinationService {
     }
 
     @Override
-    public Integer updateCombination(Integer combinationid, String c_desc) {
-        return combinationMapper.updateCombination(combinationid,c_desc);
+    public Integer updateCombination(Integer combinationid, String c_desc,String occasion) {
+        return combinationMapper.updateCombination(combinationid,c_desc,occasion);
+    }
+
+    @Override
+    public List<combinationClothes> findRecommendCombination(Integer uid, String occasion) {
+        return combinationMapper.findRecommendCombination(uid,occasion);
+    }
+
+    @Override
+    public Integer addRecommendCombination(Integer uid, String c_desc, String occasion) {
+        combinationMapper.addRecommendCombination(uid,c_desc,occasion);
+        return combinationMapper.getLastInsertId();
+    }
+
+    @Override
+    public Integer addClothesToRecommendCoombination(Integer uid, Integer combinationId, Integer clothesId, Integer value) {
+        return combinationMapper.addClothesToRecommendCoombination(uid,combinationId,clothesId,value);
+    }
+
+    @Override
+    public List<combinationClothes> findRecommendCombinationByUid(Integer uid) {
+        return combinationMapper.findRecommendCombinationByUid(uid);
+    }
+
+    @Override
+    public Integer deleteRecommendCombination(Integer uid) {
+        return combinationMapper.deleteRecommendCombination(uid);
+    }
+
+    @Override
+    public Integer deleteRecommendCombinationDetail(Integer uid) {
+        return combinationMapper.deleteRecommendCombinationDetail(uid);
     }
 }

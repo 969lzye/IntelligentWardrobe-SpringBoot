@@ -4,21 +4,30 @@
     <resultMap type="com.fjnu.intelligentwardrobe.Bean.dto.combinationClothes" id="combinationClothesMap">
         <result column="combinationid" property="combinationid"/>
         <result column="c_desc" property="c_desc"/>
+        <result column="occasion" property="occasion"/>
         <collection property="clothesList" ofType="com.fjnu.intelligentwardrobe.Bean.clothes" column="clothesid">
             <result property="clothesid" column="clothesid"/>
+            <result property="value" column="value"/>
             <result property="imgsrc" column="imgsrc"/>
         </collection>
 
 
     </resultMap>
     <insert id="addCombination">
-        insert into combination(uid,c_desc) value(#{uid},#{c_desc})
+        insert into combination(uid,c_desc,occasion) value(#{uid},#{c_desc},#{occasion})
     </insert>
     <insert id="addClothesToCombination">
-        insert into combinationdetailed(combinationid,clothesid,uid) value(#{combinationId},#{clothesId},#{uid})
+        insert into combinationdetailed(combinationid,clothesid,uid,value) value(#{combinationId},#{clothesId},#{uid},#{value})
     </insert>
+    <insert id="addRecommendCombination">
+         insert into combination(uid,c_desc,occasion,recommend) value(#{uid},#{c_desc},#{occasion},1)
+    </insert>
+    <insert id="addClothesToRecommendCoombination">
+        insert into combinationdetailed(combinationid,clothesid,uid,value,recommend) value(#{combinationId},#{clothesId},#{uid},#{value},1)
+    </insert>
+
     <update id="updateCombination">
-        update combination set c_desc=#{c_desc} where combinationid=#{combinationid}
+        update combination set c_desc=#{c_desc},occasion=#{occasion} where combinationid=#{combinationid}
     </update>
     <delete id="deleteCombination">
         delete from combination where combinationid=#{combinationid}
@@ -27,21 +36,49 @@
     <delete id="deleteCombinationDetailed">
         delete from combinationdetailed where combinationid=#{combinationid}
     </delete>
+    <delete id="deleteRecommendCombination">
+        delete from combination where uid=#{uid} and recommend=1
+    </delete>
+    <delete id="deleteRecommendCombinationDetail">
+        delete from combinationdetailed where uid=#{uid} and recommend=1
+    </delete>
     <select id="getLastInsertId" resultType="java.lang.Integer">
         SELECT LAST_INSERT_ID()
     </select>
     <select id="findCombinationByUid" resultMap="combinationClothesMap">
-        select c.c_desc,cd.combinationid,cd.clothesid,cs.imgsrc
+        select c.c_desc,cd.combinationid,cd.clothesid,cd.value,cs.imgsrc
         from combination c,combinationdetailed cd,clothes cs
         where cd.clothesid=cs.clothesid
         and c.combinationid=cd.combinationid
+        and c.uid=#{uid}
+        and c.recommend=0
     </select>
     <select id="findCombinationBycombinationid"
             resultMap="combinationClothesMap">
-        select c.c_desc,cd.combinationid,cd.clothesid,cs.imgsrc
+        select c.c_desc,cd.combinationid,c.occasion,cd.clothesid,cd.value,cs.imgsrc
         from combination c,combinationdetailed cd,clothes cs
         where cd.clothesid=cs.clothesid
         and c.combinationid=cd.combinationid
         and c.combinationid=#{combinationid}
+        and c.recommend=0
+    </select>
+    <select id="findRecommendCombination"
+            resultMap="combinationClothesMap">
+        select c.c_desc,cd.combinationid,cd.clothesid,cd.value,cs.imgsrc
+        from combination c,combinationdetailed cd,clothes cs
+        where cd.clothesid=cs.clothesid
+        and c.combinationid=cd.combinationid
+        and c.occasion=#{occasion}
+        and c.uid=#{uid}
+        and c.recommend=0
+    </select>
+    <select id="findRecommendCombinationByUid"
+            resultMap="combinationClothesMap">
+        select c.c_desc,cd.combinationid,cd.clothesid,cd.value,cs.imgsrc
+        from combination c,combinationdetailed cd,clothes cs
+        where cd.clothesid=cs.clothesid
+        and c.combinationid=cd.combinationid
+        and c.uid=#{uid}
+        and c.recommend=1
     </select>
 </mapper>

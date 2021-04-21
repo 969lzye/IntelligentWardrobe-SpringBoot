@@ -8,7 +8,7 @@ public class User {
     private String username;
     private String password;
     private String profile;
-    private Integer phone;
+    private Long phone;
     private Date time;
 
     public Integer getUid() {
@@ -43,11 +43,11 @@ public class User {
         this.profile = profile;
     }
 
-    public Integer getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 

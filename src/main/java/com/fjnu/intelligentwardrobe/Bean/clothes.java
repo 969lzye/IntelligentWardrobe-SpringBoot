@@ -14,6 +14,15 @@ public class clothes {
     private String season;
     private String occasion;
     private Date time;
+    private Integer value;
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
 
     public Integer getClothesid() {
         return clothesid;
@@ -94,11 +103,7 @@ public class clothes {
                 ", uid=" + uid +
                 ", c_desc='" + c_desc + '\'' +
                 ", typeid=" + typeid +
-                ", imgsrc='" + imgsrc + '\'' +
-                ", iscleaned=" + iscleaned +
-                ", season='" + season + '\'' +
-                ", occasion='" + occasion + '\'' +
-                ", time=" + time +
+                ", value=" + value +
                 '}';
     }
 }
